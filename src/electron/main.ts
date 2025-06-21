@@ -1,8 +1,8 @@
-import { app, BrowserWindow } from "electron"
+import { app, BrowserWindow, ipcMain } from "electron"
 import path from "path"
 
 import { getPreloadPath } from "./path-resolver.js"
-import { pollResources } from "./resource-manager.js"
+import { getStaticData, pollResources } from "./resource-manager.js"
 import { isDev } from "./utils.js"
 
 app.on("ready", () => {
@@ -19,5 +19,9 @@ app.on("ready", () => {
     )
   }
 
-  pollResources()
+  pollResources(mainWindow)
+
+  ipcMain.handle("getStaticData", () => {
+    return getStaticData()
+  })
 })
