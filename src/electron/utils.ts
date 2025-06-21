@@ -13,8 +13,11 @@ export function ipcMainHandle<Key extends keyof EventPayloadMapping>(
   handler: () => EventPayloadMapping[Key]
 ) {
   ipcMain.handle(key, (event) => {
-    event.senderFrame?.url == getUIPath()
-    handler()
+    if (!event.senderFrame) {
+      throw new Error("Event sender frame is not defined")
+    }
+    validateEventFrame(event.senderFrame)
+    return handler()
   })
 }
 
@@ -27,6 +30,7 @@ export function ipcWebContentsSend<Key extends keyof EventPayloadMapping>(
 }
 
 export function validateEventFrame(frame: WebFrameMain) {
+  console.log(frame.url)
   if (isDev() && new URL(frame.url).host === "localhost:5123") {
     return
   }
