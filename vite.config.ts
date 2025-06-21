@@ -8,4 +8,8 @@ export default defineConfig({
   build: {
     outDir: "dist-frontend",
   },
+  server: {
+    port: 5123,
+    strictPort: true,
+  },
 })
