@@ -7,7 +7,6 @@ function App() {
   const [count, setCount] = useState(0)
 
   useEffect(() => {
-    // @ts-ignore
     window.electron.subscribeToStatistics((stats) => console.log(stats))
   }, [])
 
