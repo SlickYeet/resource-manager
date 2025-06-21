@@ -1,20 +1,24 @@
-import { useEffect, useState } from "react"
+import { useMemo, useState } from "react"
 
 import "./App.css"
 import reactLogo from "./assets/react.svg"
+import { useStatistics } from "./hooks/use-statistics"
+import { Chart } from "./components/chart"
 
 function App() {
+  const statistics = useStatistics(10)
   const [count, setCount] = useState(0)
 
-  useEffect(() => {
-    const unsub = window.electron.subscribeToStatistics((stats) =>
-      console.log(stats)
-    )
-    return unsub
-  }, [])
+  const cpuUsages = useMemo(
+    () => statistics.map((stat) => stat.cpuUsage),
+    [statistics]
+  )
 
   return (
-    <>
+    <div className="App">
+      <div style={{ height: 120 }}>
+        <Chart data={cpuUsages} maxDataPoints={10} />
+      </div>
       <div>
         <a href="https://react.dev" target="_blank">
           <img src={reactLogo} className="logo react" alt="React logo" />
@@ -32,7 +36,7 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
-    </>
+    </div>
   )
 }
 

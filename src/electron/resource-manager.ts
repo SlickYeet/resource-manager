@@ -5,7 +5,7 @@ import osUtils from "os-utils"
 
 import { ipcWebContentsSend } from "./utils.js"
 
-const POLLING_INTERVAL = 500
+const POLLING_INTERVAL = 1000
 
 export function pollResources(mainWindow: BrowserWindow) {
   setInterval(async () => {
