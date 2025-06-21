@@ -7,7 +7,10 @@ function App() {
   const [count, setCount] = useState(0)
 
   useEffect(() => {
-    window.electron.subscribeToStatistics((stats) => console.log(stats))
+    const unsub = window.electron.subscribeToStatistics((stats) =>
+      console.log(stats)
+    )
+    return unsub
   }, [])
 
   return (
