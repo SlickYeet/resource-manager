@@ -10,6 +10,11 @@ type StaticData = {
   totalStorage: number
 }
 
+type EventPayloadMapping = {
+  statistics: Statistics
+  getStaticData: StaticData
+}
+
 interface Window {
   electron: {
     subscribeToStatistics: (callback: (stats: Statistics) => void) => void
